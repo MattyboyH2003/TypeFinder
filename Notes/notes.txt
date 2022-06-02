@@ -1,0 +1,23 @@
+
+Database querys needed:
+
+    Adding Data:
+        - Adding Characters (Uses CreateRecord)
+        - Adding Character Tags (Uses CreateRecord)
+
+        - Adding Sets (Uses CreateRecord)
+        - Adding Set Tags (Uses CreateRecord)
+
+        - Adding Users (Uses CreateRecord)
+
+        - Adding User Votes
+
+        - Linking Characters & Character Tags
+        - Linking Sets & Set Tags
+
+    Selecting Data:
+        - All votes by a user
+        - Character <-> Tag associations
+        - Vote <-> Set associations
+
+
