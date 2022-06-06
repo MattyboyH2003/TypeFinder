@@ -89,7 +89,7 @@ if __name__ == "__main__":
     ON Characters.CharacterID = CharacterTagsLink.CharacterID
     """
 
-    print(queryVisualise(cursorSQL, query))
+    #print(queryVisualise(cursorSQL, query))
 
 #print(tableVisualise(connectionSQL, "Characters"))
 #print(advancedVisualise(
@@ -109,57 +109,55 @@ CREATE TABLE UserVotes (
     VoteID INTEGER PRIMARY KEY,
     UserID INTEGER NOT NULL,
     CharacterID INTEGER NOT NULL,
-    SetID INTEGER,
+    SetID INTEGER NOT NULL,
     Position INTEGER NOT NULL
-)
-"""
-"""
+);
+
 CREATE TABLE Sets (
     SetID INTEGER PRIMARY KEY,
     SetName TEXT NOT NULL,
     FileName TEXT NOT NULL
-)
-"""
-"""
+);
+
 CREATE TABLE SetTagsLink (
     LinkID INTEGER PRIMARY KEY,
     SetID INTEGER NOT NULL,
     TagID INTEGER NOT NULL
-)
-"""
-"""
+);
+
 CREATE TABLE SetTags (
     TagID INTEGER PRIMARY KEY,
     TagName TEXT NOT NULL
-)
-"""
-"""
+);
+
 CREATE TABLE Users (
     UserID INTEGER PRIMARY KEY,
     Name TEXT NOT NULL
-)
-"""
-"""
+);
+
 CREATE TABLE Characters (
     CharacterID INTEGER PRIMARY KEY,
     Name TEXT NOT NULL,
     FileName TEXT NOT NULL
-)
-"""
-"""
+);
+
 CREATE TABLE CharacterTagsLink (
     LinkID INTEGER PRIMARY KEY,
     CharacterID INTEGER NOT NULL,
     TagID INTEGER NOT NULL
-)
-"""
-"""
+);
+
 CREATE TABLE CharacterTags (
     TagID INTEGER PRIMARY KEY,
     TagName TEXT NOT NULL
+);
+
+CREATE TABLE CharacterSetsLink (
+    LinkID INTEGER PRIMARY KEY,
+    CharacterID INTEGER NOT NULL,
+    SetID INTEGER NOT NULL
 )
 """
-
 
 if __name__ == "__main__":
     connectionSQL.close()

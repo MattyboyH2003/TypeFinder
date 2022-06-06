@@ -150,6 +150,10 @@ Notes/
 #database
 TypeFinder.db
 
+#images 
+/Images/Characters/*
+/Images/Sets/*
+
 
 # PyCharm
 #  JetBrains specific template is maintainted in a separate JetBrains.gitignore that can

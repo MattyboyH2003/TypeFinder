@@ -97,18 +97,14 @@ def tableVisualise(connectionSQL, table):
 
     visualised = _visualiseBase(fieldNames, result)
 
-    connectionSQL.close()
-
     return visualised
 
-def advancedVisualise(connectionSQL, fieldNames, resultData):
+def advancedVisualise(fieldNames, resultData):
     visualised = _visualiseBase(fieldNames, resultData)
 
-    connectionSQL.close()
-
     return visualised
 
-def queryVisualise(cursorSQL, query):
+def queryVisualise(cursorSQL, query, *args):
 
     frompos = -1
     for i in range(0, len(query) - 4):
@@ -161,7 +157,8 @@ def queryVisualise(cursorSQL, query):
     else:
         fieldNames = fields.split(",")
     
-    cursorSQL.execute(query)
+
+    cursorSQL.execute(query, *args)
     result = cursorSQL.fetchall()
 
     visualised = _visualiseBase(fieldNames, result)
