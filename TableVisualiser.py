@@ -125,7 +125,7 @@ def queryVisualise(cursorSQL, query, *args):
     fields = fields.replace("\n", "")
 
     if fields == "*":
-        BLACKLIST = ["", "JOIN", "SELECT", "ON", "="]
+        BLACKLIST = ["", "JOIN", "SELECT", "WHERE", "?", "ON", "=", "ORDER", "BY"]
         querySegments = query[frompos+5:].split(" ")
         
         for i in range(0, len(querySegments)):
@@ -145,6 +145,8 @@ def queryVisualise(cursorSQL, query, *args):
             if '.' in querySegments[i-removedItems]:
                 querySegments.remove(querySegments[i-removedItems])
                 removedItems += 1
+        
+        print(querySegments)
 
         fieldNames = []
         for table in querySegments:
