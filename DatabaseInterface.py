@@ -2,7 +2,7 @@ import sqlite3
 from DatabaseManager import CreateQuerys, RunQuery
 from TableVisualiser import *
 
-class TerminalMessages:
+class _TerminalMessages:
     @staticmethod
     def Log(msg, funcName = "Unknown Function"):
         print(f"--> {funcName}: {msg}")
@@ -18,7 +18,7 @@ def AddUser(connection, cursor, data : dict):
     result = RunQuery(connection, cursor, query, [data["Name"]])
 
     if result: # If the user is already in the database
-        TerminalMessages.Log(f"Adding User Failed: User '{data['Name']}' Already Exists", "AddUser")
+        _TerminalMessages.Log(f"Adding User Failed: User '{data['Name']}' Already Exists", "AddUser")
         return
     else: # If the user is not already in the database
         query = CreateQuerys.CreateRecord("Users", ["Name"])
@@ -31,7 +31,7 @@ def AddCharacter(connection, cursor, data : dict):
     result = RunQuery(connection, cursor, query, [data["Name"]])
 
     if result: # If the character already exists in the database
-        TerminalMessages.Log(f"Adding Character Failed: Character '{data['Name']}' Already Exists", "AddCharacter")
+        _TerminalMessages.Log(f"Adding Character Failed: Character '{data['Name']}' Already Exists", "AddCharacter")
         return
     else: # If the character dosen't already exist in the database
         query = CreateQuerys.CreateRecord("Characters", ["Name", "FileName"])
@@ -44,7 +44,7 @@ def AddCharacterTag(connection, cursor, data : dict):
     result = RunQuery(connection, cursor, query, [data["TagName"]])
 
     if result: # If the character tag already exists in the database
-        TerminalMessages.Log(f"Adding Character Tag Failed: Tag '{data['TagName']}' Already Exists", "AddCharacterTags")
+        _TerminalMessages.Log(f"Adding Character Tag Failed: Tag '{data['TagName']}' Already Exists", "AddCharacterTags")
         return
     else: # If the character tag dosen't already exist in the database
         query = CreateQuerys.CreateRecord("CharacterTags", ["TagName"])
@@ -57,7 +57,7 @@ def AddSet(connection, cursor, data : dict):
     result = RunQuery(connection, cursor, query, [data["SetName"]])
 
     if result: # If the set already exists in the database
-        TerminalMessages.Log(f"Adding Set Failed: Set '{data['SetName']}' Already Exists", "AddSet")
+        _TerminalMessages.Log(f"Adding Set Failed: Set '{data['SetName']}' Already Exists", "AddSet")
         return
     else: # If the set dosen't already exist in the database
         query = CreateQuerys.CreateRecord("Sets", ["SetName", "FileName"])
@@ -70,7 +70,7 @@ def AddSetTag(connection, cursor, data : dict):
     result = RunQuery(connection, cursor, query, [data["TagName"]])
 
     if result: # If the set tag already exists in the database
-        TerminalMessages.Log(f"Adding Set Tag Failed: Set Tag '{data['TagName']}' Already Exists", "AddSetTag")
+        _TerminalMessages.Log(f"Adding Set Tag Failed: Set Tag '{data['TagName']}' Already Exists", "AddSetTag")
         return
     else: # If the set tag dosen't already exist in the database
         query = CreateQuerys.CreateRecord("SetTags", ["TagName"])
@@ -84,7 +84,7 @@ def CharacterTagsLink(connection, cursor, character, tag):
     result = RunQuery(connection, cursor, query, [character])
 
     if not result: #If the character dosent exist, cancel linking
-        TerminalMessages.Log(f"Linking Failed: Character '{character}' not found", "CharacterTagsLink")
+        _TerminalMessages.Log(f"Linking Failed: Character '{character}' not found", "CharacterTagsLink")
         return
     else:
         characterID = result[0][0]
@@ -94,7 +94,7 @@ def CharacterTagsLink(connection, cursor, character, tag):
     result = RunQuery(connection, cursor, query, [tag])
 
     if not result: #If the tag dosen't exist, create it
-        TerminalMessages.Log(f"Tag '{tag}' does not exist, creating Tag: '{tag}'", "CharacterTagsLink")
+        _TerminalMessages.Log(f"Tag '{tag}' does not exist, creating Tag: '{tag}'", "CharacterTagsLink")
         
         AddCharacterTag(connection, cursor, {"TagName" : tag})
 
@@ -109,7 +109,7 @@ def CharacterTagsLink(connection, cursor, character, tag):
     result = RunQuery(connection, cursor, query, [characterID, tagID])
 
     if result: #If the link already exists, cencel linking
-        TerminalMessages.Log(f"Linking failed: Link already exists between '{character}' and '{tag}'", "CharacterTagsLink")
+        _TerminalMessages.Log(f"Linking failed: Link already exists between '{character}' and '{tag}'", "CharacterTagsLink")
         return
 
     #Create link if all tests passed
@@ -123,7 +123,7 @@ def SetTagsLink(connection, cursor, set, tag):
     result = RunQuery(connection, cursor, query, [set])
 
     if not result: #If the set dosent exist, cancel linking
-        TerminalMessages.Log(f"Linking Failed: Set '{set}' not found", "SetTagsLink")
+        _TerminalMessages.Log(f"Linking Failed: Set '{set}' not found", "SetTagsLink")
         return
     else:
         setID = result[0][0]
@@ -133,7 +133,7 @@ def SetTagsLink(connection, cursor, set, tag):
     result = RunQuery(connection, cursor, query, [tag])
 
     if not result: #If the tag dosen't exist, create it
-        TerminalMessages.Log(f"Tag '{tag}' does not exist, creating Tag: '{tag}'", "SetTagsLink")
+        _TerminalMessages.Log(f"Tag '{tag}' does not exist, creating Tag: '{tag}'", "SetTagsLink")
         query = CreateQuerys.CreateRecord("SetTags", ["TagName"])
         RunQuery(connection, cursor, query, [tag])
 
@@ -148,7 +148,7 @@ def SetTagsLink(connection, cursor, set, tag):
     result = RunQuery(connection, cursor, query, [setID, tagID])
 
     if result: #If the link already exists, cencel linking
-        TerminalMessages.Log(f"Linking failed: Link already exists between '{set}' and '{tag}'", "SetTagsLink")
+        _TerminalMessages.Log(f"Linking failed: Link already exists between '{set}' and '{tag}'", "SetTagsLink")
         return
 
     #Create link if all tests passed
@@ -162,7 +162,7 @@ def CharacterSetsLink(connection, cursor, character, set):
     result = RunQuery(connection, cursor, query, [character])
 
     if not result: #If the character dosen't exist, cancel linking
-        TerminalMessages.Log(f"Linking Failed: Character '{character}' not found", "CharacterSetsLink")
+        _TerminalMessages.Log(f"Linking Failed: Character '{character}' not found", "CharacterSetsLink")
         return
     else:
         characterID = result[0][0]
@@ -172,7 +172,7 @@ def CharacterSetsLink(connection, cursor, character, set):
     result = RunQuery(connection, cursor, query, [set])
 
     if not result: #If the set dosent exist, cancel linking
-        TerminalMessages.Log(f"Linking Failed: Set '{set}' not found", "CharacterSetsLink")
+        _TerminalMessages.Log(f"Linking Failed: Set '{set}' not found", "CharacterSetsLink")
         return
     else:
         setID = result[0][0]
@@ -182,7 +182,7 @@ def CharacterSetsLink(connection, cursor, character, set):
     result = RunQuery(connection, cursor, query, [characterID, setID])
 
     if result: #If the link already exists, cencel linking
-        TerminalMessages.Log(f"Linking failed: Link already exists between '{character}' and '{set}'", "CharacterSetsLink")
+        _TerminalMessages.Log(f"Linking failed: Link already exists between '{character}' and '{set}'", "CharacterSetsLink")
         return
 
     #Create link if all tests passed
@@ -196,7 +196,7 @@ def AddVote(connection, cursor, user, character, position, set):
     result = RunQuery(connection, cursor, query, [user])
 
     if not result:
-        TerminalMessages.Log(f"Adding Vote Failed: User '{user}' not found", "AddVote")
+        _TerminalMessages.Log(f"Adding Vote Failed: User '{user}' not found", "AddVote")
         return
     else:
         userID = result[0][0]
@@ -206,7 +206,7 @@ def AddVote(connection, cursor, user, character, position, set):
     result = RunQuery(connection, cursor, query, [character])
 
     if not result:
-        TerminalMessages.Log(f"Adding Vote Failed: Character '{character}' not found", "AddVote")
+        _TerminalMessages.Log(f"Adding Vote Failed: Character '{character}' not found", "AddVote")
         return
     else:
         characterID = result[0][0]
@@ -216,7 +216,7 @@ def AddVote(connection, cursor, user, character, position, set):
     result = RunQuery(connection, cursor, query, [set])
 
     if not result:
-        TerminalMessages.Log(f"Adding Vote Failed: Set '{set}' not found", "AddVote")
+        _TerminalMessages.Log(f"Adding Vote Failed: Set '{set}' not found", "AddVote")
         return
     else:
         setID = result[0][0]
@@ -227,7 +227,7 @@ def AddVote(connection, cursor, user, character, position, set):
     result = RunQuery(connection, cursor, query, [characterID, setID])
 
     if not result:
-        TerminalMessages.Log(f"Adding Vote Failed: Character '{character}' not in Set '{set}'", "AddVote")
+        _TerminalMessages.Log(f"Adding Vote Failed: Character '{character}' not in Set '{set}'", "AddVote")
         return
 
     #Check Position is in range
@@ -236,7 +236,7 @@ def AddVote(connection, cursor, user, character, position, set):
     result = RunQuery(connection, cursor, query, [setID])
 
     if position > result[0][0] or position <= 0:
-        TerminalMessages.Log(f"Adding Vote Failed: position '{position}' out of range", "AddVote")
+        _TerminalMessages.Log(f"Adding Vote Failed: position '{position}' out of range", "AddVote")
         return
 
     #Check Position isnt already taken
@@ -245,7 +245,7 @@ def AddVote(connection, cursor, user, character, position, set):
     result = RunQuery(connection, cursor, query, [userID, setID, position])
 
     if result:
-        TerminalMessages.Log(f"Adding Vote Failed: position '{position}' already has vote registered", "AddVote")
+        _TerminalMessages.Log(f"Adding Vote Failed: position '{position}' already has vote registered", "AddVote")
         return
 
     #Add User Vote if all checks passed
@@ -266,7 +266,7 @@ def CharactersAndTags(connection, cursor, character = "", scope = "*", order = "
         result = RunQuery(connection, cursor, query, [character])
 
         if not result: # If the character already exists in the database
-            TerminalMessages.Log(f"Getting Character Tags Failed: Character '{character}' Does not Exist", "CharactersAndTags")
+            _TerminalMessages.Log(f"Getting Character Tags Failed: Character '{character}' Does not Exist", "CharactersAndTags")
             return None
 
     # Query to get data
@@ -298,7 +298,7 @@ def SetsAndTags(connection, cursor, set = "", scope = "*", order = "", visualise
         result = RunQuery(connection, cursor, query, [set])
 
         if not result: # If the set already exists in the database
-            TerminalMessages.Log(f"Getting Set Tags Failed: Set '{set}' Does not Exist", "SetsAndTags")
+            _TerminalMessages.Log(f"Getting Set Tags Failed: Set '{set}' Does not Exist", "SetsAndTags")
             return None
 
     # Query to get data
@@ -329,7 +329,7 @@ def UsersAndVotes(connection, cursor, user = "", scope = "*", order = "", visual
         result = RunQuery(connection, cursor, query, [user])
 
         if not result: # If the character already exists in the database
-            TerminalMessages.Log(f"Getting User Votes Failed: User '{user}' Does not Exist", "UsersAndVotes")
+            _TerminalMessages.Log(f"Getting User Votes Failed: User '{user}' Does not Exist", "UsersAndVotes")
             return None
 
     # Query to get data
@@ -361,7 +361,7 @@ def SetsAndCharacters(connection, cursor, set = "", scope = "*", order = "", vis
         result = RunQuery(connection, cursor, query, [set])
 
         if not result: # If the set already exists in the database
-            TerminalMessages.Log(f"Getting Set Characters Failed: Set '{set}' Does not Exist", "SetsAndCharacters")
+            _TerminalMessages.Log(f"Getting Set Characters Failed: Set '{set}' Does not Exist", "SetsAndCharacters")
             return None
 
     # Query to get data
@@ -386,84 +386,3 @@ def SetsAndCharacters(connection, cursor, set = "", scope = "*", order = "", vis
 
     # Return the result
     return RunQuery(connection, cursor, query, args)
-
-
-
-#
-# Calling functions
-#
-
-connectionSQL = sqlite3.connect("TypeFinder.db")
-cursorSQL = connectionSQL.cursor()
-
-#AddUser(connectionSQL, cursorSQL, {"Name" : "Travis"})
-#AddCharacter(connectionSQL, cursorSQL, {"Name" : "Hachi", "FileName" : ""})
-#AddSet(connectionSQL, cursorSQL, {"SetName" : "DARLING in the FRANXX", "FileName" : "DARLING in the FRANXX characters.png"})
-
-#CharacterTagsLink(connectionSQL, cursorSQL, "Zero Two", "HairColour:Pink")
-#SetTagsLink(connectionSQL, cursorSQL, "DARLING in the FRANXX", "Genre:Anime")
-#CharacterSetsLink(connectionSQL, cursorSQL, "Hachi", "DARLING in the FRANXX")
-
-"""
-AddVote(connectionSQL, cursorSQL, "Elissa", "Kokoro", 1, "DARLING in the FRANXX")
-AddVote(connectionSQL, cursorSQL, "Elissa", "Hiro", 2, "DARLING in the FRANXX")
-AddVote(connectionSQL, cursorSQL, "Elissa", "Miku", 3, "DARLING in the FRANXX")
-AddVote(connectionSQL, cursorSQL, "Elissa", "Naomi", 4, "DARLING in the FRANXX")
-AddVote(connectionSQL, cursorSQL, "Elissa", "Nana", 5, "DARLING in the FRANXX")
-AddVote(connectionSQL, cursorSQL, "Elissa", "Ichigo", 6, "DARLING in the FRANXX")
-AddVote(connectionSQL, cursorSQL, "Elissa", "Zero Two", 7, "DARLING in the FRANXX")
-AddVote(connectionSQL, cursorSQL, "Elissa", "Zorome", 8, "DARLING in the FRANXX")
-AddVote(connectionSQL, cursorSQL, "Elissa", "Ikuno", 9, "DARLING in the FRANXX")
-AddVote(connectionSQL, cursorSQL, "Elissa", "Goro", 10, "DARLING in the FRANXX")
-AddVote(connectionSQL, cursorSQL, "Elissa", "Mitsuru", 11, "DARLING in the FRANXX")
-AddVote(connectionSQL, cursorSQL, "Elissa", "Hachi", 12, "DARLING in the FRANXX")
-AddVote(connectionSQL, cursorSQL, "Elissa", "Futoshi", 13, "DARLING in the FRANXX")
-"""
-
-#CharactersAndTags(connectionSQL, cursorSQL, scope = "Characters.Name, CharacterTags.TagName", visualise = True)
-#SetsAndTags(connectionSQL, cursorSQL, scope = "Sets.SetName, SetTags.TagName", visualise = True)
-#UsersAndVotes(connectionSQL, cursorSQL, visualise = True, order = "Users.UserID, UserVotes.Position")
-#SetsAndCharacters(connectionSQL, cursorSQL, scope = "Sets.SetName, Characters.Name" , visualise = True)
-
-query = """
-    SELECT Sets.SetName, SetTags.TagName
-        FROM Sets JOIN (
-            SetTagsLink JOIN SetTags
-            ON SetTagsLink.TagID = SetTags.TagID
-        )
-    ON Sets.SetID = SetTagsLink.SetID
-"""
-
-query = """
-    SELECT Users.Name, Characters.Name, Sets.SetName, UserVotes.Position FROM UserVotes 
-        JOIN Users ON UserVotes.UserID = Users.UserID
-        JOIN Characters ON UserVotes.CharacterID = Characters.CharacterID
-        JOIN Sets ON UserVotes.SetID = Sets.SetID
-    ORDER BY Uservotes.Position, Users.Name
-"""
-
-query = """
-    SELECT Users.Name, Characters.Name, UserVotes.Position FROM UserVotes
-        JOIN Users ON UserVotes.UserID = Users.UserID
-        JOIN Characters ON UserVotes.CharacterID = Characters.CharacterID
-    ORDER BY Users.Name, UserVotes.Position
-"""
-
-query = """
-    SELECT Characters.Name FROM Sets
-        JOIN CharacterSetsLink ON Sets.SetID = CharacterSetsLink.SetID
-        JOIN Characters ON CharacterSetsLink.CharacterID = Characters.CharacterID
-    WHERE Sets.SetName = ?
-"""
-
-#print(queryVisualise(cursorSQL, query, ["Zero Two"]))
-
-#print(tableVisualise(connectionSQL, "Users"))
-#print(tableVisualise(connectionSQL, "UserVotes"))
-#print(tableVisualise(connectionSQL, "Characters"))
-#print(tableVisualise(connectionSQL, "CharacterTagsLink"))
-#print(tableVisualise(connectionSQL, "CharacterTags"))
-#print(tableVisualise(connectionSQL, "Sets"))
-#print(tableVisualise(connectionSQL, "SetTagsLink"))
-#print(tableVisualise(connectionSQL, "SetTags"))
-#print(tableVisualise(connectionSQL, "CharacterSetsLink"))
