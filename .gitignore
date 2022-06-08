@@ -147,8 +147,9 @@ cython_debug/
 #notes
 Notes/
 
-#database
-TypeFinder.db
+#data
+*.db
+*.json
 
 #images 
 /Images/Characters/*
